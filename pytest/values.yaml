@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: pytest
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+deployment:
+  nodeSelector: {}
+
+volume:
+  name: pytest-logs
+  mountPath: /app/logs
+
+metrics:
+  enabled: false
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+    prometheus.io/path: "/metrics"
+

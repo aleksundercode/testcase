@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "10001:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      - JENKINS_OPTS=""
+
+  jenkins-agent:
+    image: agent-j
+    container_name: jenkins-agent
+    restart: unless-stopped
+    environment:
+      - JENKINS_SECRET=56b48692e1be12995034af505af85bd15c4a32215a22c3349719730098076342
+      - JENKINS_AGENT_NAME=agent
+      - JENKINS_URL=http://192.168.49.3:8080/
+      - DOCKER_HOST=tcp://192.168.49.1:2375
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  jenkins_home:
+
+networks:
+  default:
+    external:
+      name: minikube
+
