@@ -69,7 +69,6 @@ pipeline {
                     export DOCKER_CERT_PATH="/root/.minikube/certs"
                     export MINIKUBE_ACTIVE_DOCKERD="minikube"
                     export KUBECONFIG="/root/.kube/config"
-                    docker ps
                     helm upgrade --install pytest-release ${CHART_PATH}
                 '''
             }
